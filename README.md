@@ -1,5 +1,15 @@
 # quantiphi_QA_pdf
-This is for Quantiphi Case Study round
+This is for Quantiphi Case Study round. 
+A RAG based QA app has been developed with source doc as First 2 chapters of ebook - 'Concepts of Biology'
+
+# repo structure:
+1. 'src' directory has all the executable codes - pdf_ingest.py, run_inference.py, run_streamlit_inference_api.py
+2. source_db directory has the source pdf file
+3. Upon first run of pdf_ingest.py, vector_dbs directory will be populated with persisted vector stores.
+4. 'models' directory will have downloaded text generation llama models
+5. 'notebooks' directory has all notebook *.ipynb workings
+6. local_chat_history directory has all the saved prompt-answers logs
+7. repo also has dockerfile and requirements.txt files
 
 ## Highlights of this solution:
 1. Successful in getting high accuracy answers
@@ -17,10 +27,10 @@ This is for Quantiphi Case Study round
 ## Steps to run this repo:
 1. Git clone this repo
 
-2. # Build the Docker image
+2. Build the Docker image
    docker build -t your_image_name .
 
-3. # Run the Docker container
+3. Run the Docker container
    docker run -it --rm your_image_name
 
 4. To test the QA bot in command prompt mode:
