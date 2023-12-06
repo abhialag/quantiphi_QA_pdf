@@ -54,12 +54,13 @@ from constants import (
     MODEL_BASENAME,
     MAX_NEW_TOKENS,
     MODELS_PATH,
-    CHROMA_SETTINGS
+    CHROMA_SETTINGS,
+    ROOT_DIRECTORY
 )
 
 # %%
-print(MODEL_ID,
-    MODEL_BASENAME)
+logging.info(MODEL_ID,MODEL_BASENAME,PERSIST_DIRECTORY,MODELS_PATH,ROOT_DIRECTORY)
+print(MODEL_ID,MODEL_BASENAME,PERSIST_DIRECTORY,MODELS_PATH,ROOT_DIRECTORY)
 
 # %%
 # !pip install auto-gptq==0.2.2
@@ -116,8 +117,8 @@ def load_model(model_id, model_basename=None, LOGGING=logging, device_type='cpu'
 
     local_llm = HuggingFacePipeline(pipeline=pipe)
     logging.info("Local LLM Loaded")
-    print("Local LLM Loaded - Querying How are you?")
-    print(local_llm("How are you?"))
+#     print("Local LLM Loaded - Querying How are you?")
+#     print(local_llm("How are you?"))
 
     return local_llm
 
@@ -184,7 +185,7 @@ def retrieval_qa_pipeline(use_history, promptTemplate_type="llama",device_type='
             },
         )
 
-    return qa
+    return qa,embeddings,retriever,db,llm
 
 # %%
 def main(show_sources, use_history, model_type, save_qa,device_type='cpu'):
@@ -216,11 +217,11 @@ def main(show_sources, use_history, model_type, save_qa,device_type='cpu'):
     if not os.path.exists(MODELS_PATH):
         os.mkdir(MODELS_PATH)
 
-    qa = retrieval_qa_pipeline(use_history, promptTemplate_type=model_type,device_type=device_type)
+    qa = retrieval_qa_pipeline(use_history, promptTemplate_type=model_type,device_type=device_type)[0]
     # Interactive questions and answers
     while True:
         query = input("\nEnter a query: ")
-        if query == "exit":
+        if query == "exit" or query == "Thank you":
             break
         # Get the answer from the chain
         res = qa(query)
@@ -248,6 +249,7 @@ def main(show_sources, use_history, model_type, save_qa,device_type='cpu'):
 
 # %%
 if __name__ == "__main__":
+    logging.info(MODEL_ID,MODEL_BASENAME,PERSIST_DIRECTORY,MODELS_PATH)
     show_sources=True
     use_history=True
     device_type='cpu'

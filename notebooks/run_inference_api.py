@@ -62,10 +62,10 @@ app = Flask(__name__)
 def prompt_route():
     global QA
     user_prompt = request.form.get("user_prompt")
-    #user_prompt = ' Magnesium has an atomic number of 12. Which of the following statements is true of a neutral magnesium atom?'
-    print(f'User Prompt: {user_prompt}')
+#     user_prompt = ' Magnesium has an atomic number of 12. Which of the following statements is true of a neutral magnesium atom?'
+    logging.info(f'User Prompt: {user_prompt}')
     if user_prompt:
-        #print(f'User Prompt: {user_prompt}')
+        print(f'User Prompt: {user_prompt}')
         # Get the answer from the chain
         res = QA(user_prompt)
         answer, docs = res["result"], res["source_documents"]
@@ -75,7 +75,7 @@ def prompt_route():
             "Answer": answer,
         }
         
-        print(answer)
+        logging.info(answer)
         
         prompt_response_dict["Sources"] = []
         for document in docs:
