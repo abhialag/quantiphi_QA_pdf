@@ -31,25 +31,29 @@ A snapshot to ui version of inference - ![Alt text](image-2.png)
 
 
 ## Steps to run this repo:
-1. Git clone this repo
+1. Git clone this repo. Navigate 'cd' to the repo directory.
 
 2. Build the Docker image
    docker build -t your_image_name .
 
 3. Run the Docker container
-   docker run -it --rm your_image_name
+   docker run -it  your_image_name
 
-4. To test the QA bot in command prompt mode:
-      run command python src/run_inference.py
+4. Run the pdf_ingest module to persist the vector store, run command:
+      docker run -it your_image_name python src/pdf_ingest.py
+5. To test the QA bot in command prompt mode, run command (-- enter the ques prompt in Query prompt in terminal):
+      docker run -it your_image_name python src/run_inference.py
 
-5. To test the QA bot in streamlit UI mode:
-      run command: streamlit run src/run_streamlit_inference_api.py
+6. To test the QA bot in streamlit UI mode:
+      docker run -it your_image_name streamlit run src/run_streamlit_inference_api.py
 
 ## Evaluation Design:
 1. Each prompt and its corresponding answer are saved as csv logs.
 2. This needs to be ranked by Business/Client in a scale of 1-3, i.e 3 indicating the most accurate output in terms of ground truth
 3. Based on the ranking received, I would then start analysing their corresponding source documents and if need be, would further make my retrieval mechanism more efficient.
-4. We can also leverage Langsmith tool to evaluate our responses. 
+4. Assuming we have ground truths for sample prompts, evaluation metrics like (faithfulness, answer_relevancy, context_relevancy context_recall) from ragas library could be used.
+5. We can also leverage Langsmith tool to evaluate our responses. 
+ 
 
 ## Further Opportunities of Improvement:
 1. For more volumes of PDFs - efficient vector DBs and robust retriever like ParentDocument retriever to be used
