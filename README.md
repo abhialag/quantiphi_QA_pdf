@@ -12,7 +12,7 @@ A RAG based QA app has been developed with source doc as First 2 chapters of ebo
 7. repo also has dockerfile and requirements.txt files
 
 ## Highlights of this solution:
-1. Successful in getting high accuracy answers
+1. Successful in getting high accuracy answers, even to complex queries that requires analytical skills.
 2. Uses open source hugging face models for embeddings and text-generations
 3. Vector Databases are persisted
 4. The QA application is memory enabled to retain and preserve the long conversation context
