@@ -16,4 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # ENV VARIABLE_NAME=value
 
 # Specify the command to run on container start
-CMD ["python", "src/pdf_ingest.py"]
+CMD [""]
+# CMD ["python", "src/pdf_ingest.py"]

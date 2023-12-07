@@ -26,6 +26,7 @@ from langchain.storage import InMemoryStore
 
 from run_inference import load_model,retrieval_qa_pipeline
 from prompt_template_utils import get_prompt_template
+import utils
 
 
 # In[13]:
@@ -115,6 +116,8 @@ if submit_button:
     response = st.session_state["QA"](prompt)
     print("prompt sent to LLM for generation")
     answer, docs = response["result"], response["source_documents"]
+    if save_qa:
+            utils.log_to_csv(prompt, answer)
     print("Answer ---->", answer)
 #     st.write(answer)
     # ...and write it out to the screen
