@@ -3,7 +3,6 @@ import os
 # from dotenv import load_dotenv
 from chromadb.config import Settings
 
-# https://python.langchain.com/en/latest/modules/indexes/document_loaders/examples/excel.html?highlight=xlsx#microsoft-excel
 from langchain.document_loaders import CSVLoader, PDFMinerLoader, TextLoader, UnstructuredExcelLoader, Docx2txtLoader
 from langchain.document_loaders import UnstructuredFileLoader, UnstructuredMarkdownLoader
 
@@ -12,10 +11,12 @@ from langchain.document_loaders import UnstructuredFileLoader, UnstructuredMarkd
 ROOT_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 
 # Define the folder for storing database
-SOURCE_DIRECTORY = f"{ROOT_DIRECTORY}/SOURCE_DOCUMENTS"
+SOURCE_DIR_FILE = f"./SOURCE_DATA_DB/ConceptsofBiology-WEB_Chapter 1-2.pdf" # remove this once running from scripts
 
-PERSIST_DIRECTORY = f"{ROOT_DIRECTORY}/DB"
+# for persisting vector databases
+PERSIST_DIRECTORY = f"./VECTOR_DBS"  # remove this once running from scripts
 
+#for saving huggingface pretrained llm models
 MODELS_PATH = "./models"
 
 # Can be changed to a specific number
@@ -38,14 +39,11 @@ CHILD_CHUNK_SIZE = 600
 CONTEXT_WINDOW_SIZE = 4096
 MAX_NEW_TOKENS = CONTEXT_WINDOW_SIZE  # int(CONTEXT_WINDOW_SIZE/4)
 
-#### If you get a "not enough space in the buffer" error, you should reduce the values below, start with half of the original values and keep halving the value until the error stops appearing
 
 N_GPU_LAYERS = 100  # Llama-2-70B has 83 layers
 N_BATCH = 512
 
-### From experimenting with the Llama-2-7B-Chat-GGML model on 8GB VRAM, these values work:
-# N_GPU_LAYERS = 20
-# N_BATCH = 512
+
 
 
 # https://python.langchain.com/en/latest/_modules/langchain/document_loaders/excel.html#UnstructuredExcelLoader
@@ -65,6 +63,9 @@ DOCUMENT_MAP = {
 # Default Instructor Model
 EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Accuracy with lower VRAM usage)
 
+# Default Embedding Model
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-mpnet-base-v2"
+
 ####
 #### OTHER EMBEDDING MODEL OPTIONS
 ####
@@ -74,33 +75,7 @@ EMBEDDING_MODEL_NAME = "hkunlp/instructor-large"  # Uses 1.5 GB of VRAM (High Ac
 # EMBEDDING_MODEL_NAME = "intfloat/e5-base-v2" # Uses 0.5 GB of VRAM (A good model for lower VRAM GPUs)
 # EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2" # Uses 0.2 GB of VRAM (Less accurate but fastest - only requires 150mb of vram)
 
-####
-#### MULTILINGUAL EMBEDDING MODELS
-####
 
-# EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-large" # Uses 2.5 GB of VRAM
-# EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-base" # Uses 1.2 GB of VRAM
-
-
-#### SELECT AN OPEN SOURCE LLM (LARGE LANGUAGE MODEL)
-# Select the Model ID and model_basename
-# load the LLM for generating Natural Language responses
-
-#### GPU VRAM Memory required for LLM Models (ONLY) by Billion Parameter value (B Model)
-#### Does not include VRAM used by Embedding Models - which use an additional 2GB-7GB of VRAM depending on the model.
-####
-#### (B Model)   (float32)    (float16)    (GPTQ 8bit)         (GPTQ 4bit)
-####    7b         28 GB        14 GB       7 GB - 9 GB        3.5 GB - 5 GB
-####    13b        52 GB        26 GB       13 GB - 15 GB      6.5 GB - 8 GB
-####    32b        130 GB       65 GB       32.5 GB - 35 GB    16.25 GB - 19 GB
-####    65b        260.8 GB     130.4 GB    65.2 GB - 67 GB    32.6 GB -  - 35 GB
-
-# MODEL_ID = "TheBloke/Llama-2-7B-Chat-GGML"
-# MODEL_BASENAME = "llama-2-7b-chat.ggmlv3.q4_0.bin"
-
-####
-#### (FOR GGUF MODELS)
-####
 
 # MODEL_ID = "TheBloke/Llama-2-13b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-13b-chat.Q4_K_M.gguf"
@@ -114,19 +89,6 @@ MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 # MODEL_ID = "TheBloke/Llama-2-70b-Chat-GGUF"
 # MODEL_BASENAME = "llama-2-70b-chat.Q4_K_M.gguf"
 
-####
-#### (FOR HF MODELS)
-####
-
-# MODEL_ID = "NousResearch/Llama-2-7b-chat-hf"
-# MODEL_BASENAME = None
-# MODEL_ID = "TheBloke/vicuna-7B-1.1-HF"
-# MODEL_BASENAME = None
-# MODEL_ID = "TheBloke/Wizard-Vicuna-7B-Uncensored-HF"
-# MODEL_ID = "TheBloke/guanaco-7B-HF"
-# MODEL_ID = 'NousResearch/Nous-Hermes-13b' # Requires ~ 23GB VRAM. Using STransformers
-# alongside will 100% create OOM on 24GB cards.
-# llm = load_model(device_type, model_id=model_id)
 
 ####
 #### (FOR GPTQ QUANTIZED) Select a llm model based on your GPU and VRAM GB. Does not include Embedding Models VRAM usage.
@@ -184,10 +146,3 @@ MODEL_BASENAME = "llama-2-7b-chat.Q4_K_M.gguf"
 # MODEL_ID = "TheBloke/orca_mini_3B-GGML"
 # MODEL_BASENAME = "orca-mini-3b.ggmlv3.q4_0.bin"
 
-####
-#### (FOR AWQ QUANTIZED) Select a llm model based on your GPU and VRAM GB. Does not include Embedding Models VRAM usage.
-### (*** MODEL_BASENAME is not actually used but have to contain .awq so the correct model loading is used ***)
-### (*** Compute capability 7.5 (sm75) and CUDA Toolkit 11.8+ are required ***)
-####
-# MODEL_ID = "TheBloke/Llama-2-7B-Chat-AWQ"
-# MODEL_BASENAME = "model.safetensors.awq"

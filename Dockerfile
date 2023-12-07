@@ -5,13 +5,12 @@ FROM python:3.10.9
 WORKDIR /
 
 # Copy the requirements.txt file into the container
-COPY requirements.txt .
+# COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+COPY . ./
 
 # Install any dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the current directory contents into the container at /app
-COPY . /
 
 # Set environment variables (if needed)
 # ENV VARIABLE_NAME=value

@@ -3,7 +3,7 @@ This is for Quantiphi Case Study round.
 A RAG based QA app has been developed with source doc as First 2 chapters of ebook - 'Concepts of Biology'
 
 # repo structure:
-1. 'src' directory has all the executable codes - pdf_ingest.py, run_inference.py, run_streamlit_inference_api.py
+1. 'src' directory has all the executable codes - pdf_ingest.py, run_inference.py, run_streamlit_inference_api.py. 'constants.py' has the llm, embeddings models mentioned along with configs like chunk_size, overlap.
 2. source_db directory has the source pdf file
 3. Upon first run of pdf_ingest.py, vector_dbs directory will be populated with persisted vector stores.
 4. 'models' directory will have downloaded text generation llama models
@@ -23,6 +23,12 @@ A RAG based QA app has been developed with source doc as First 2 chapters of ebo
         show retrieved document sources: True/False; 
         save QA results: True/False
 7. The code also gives flexibility in chosing embeddings model and offers choice to use Quantized versions of Text generation models as well.
+
+## Sample Answers to Questions asked:
+the complete log of tried question prompts are in 'local_chat_history' directory.
+A snapshot to terminal run of inference - ![Alt text](image-1.png)
+A snapshot to ui version of inference - ![Alt text](image-2.png)
+
 
 ## Steps to run this repo:
 1. Git clone this repo
@@ -46,6 +52,6 @@ A RAG based QA app has been developed with source doc as First 2 chapters of ebo
 4. We can also leverage Langsmith tool to evaluate our responses. 
 
 ## Further Opportunities of Improvement:
-1. Speed of Text Generation LLM can be further improved by use of Quantized Lllama models
-2. For more volumes of PDFs - efficient vector DBs and robust retriever like ParentDocument retriever to be used
+1. For more volumes of PDFs - efficient vector DBs and robust retriever like ParentDocument retriever to be used
+2. Speed of Text Generation LLM can be further improved by use of Quantized Lllama models
 3. For Images and Tables - we can use ocr modules of python
