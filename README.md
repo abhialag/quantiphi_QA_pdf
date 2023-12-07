@@ -27,8 +27,7 @@ A RAG based QA app has been developed with source doc as First 2 chapters of ebo
 ## Sample Answers to Questions asked:
 the complete log of tried question prompts are in 'local_chat_history' directory.
 A snapshot to terminal run of inference - ![Alt text](image-1.png)
-A snapshot to ui version of inference - ![Alt text](image-2.png)
-
+A snapshot to ui version of inference - ![Alt text](image-3.png)
 
 ## Steps to run this repo:
 1. Git clone this repo. Navigate 'cd' to the repo directory.
