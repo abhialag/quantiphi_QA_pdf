@@ -1,5 +1,5 @@
 # quantiphi_QA_pdf
-This is for Quantiphi Case Study round. 
+This is for Quantiphi Case Study round by Abhay Kumar. 
 A RAG based QA app has been developed with source doc as First 2 chapters of ebook - 'Concepts of Biology'
 
 # repo structure:
